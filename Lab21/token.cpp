@@ -24,7 +24,7 @@ std::ostream& operator << ( std::ostream& outs, const Token & tok )
         case Token::PI: outs << "TOKEN(PI)"; break;
         case Token::END: outs << "TOKEN(END)"; break;
         case Token::ID: outs << "TOKEN(ID)"; break;
-        case Token::PRINTLN: outs << "TOKEN(PRINTLN!)"; break;
+        case Token::PRINTLN: outs << "TOKEN(PRINTLN)"; break;
         case Token::ASSIGN: outs << "TOKEN(ASSIGN)"; break;
         case Token::PC: outs << "TOKEN(PC)"; break;
         case Token::LT: outs << "TOKEN(LT)"; break;
@@ -35,15 +35,18 @@ std::ostream& operator << ( std::ostream& outs, const Token & tok )
         case Token::WHILE: outs << "TOKEN(WHILE)"; break;
         case Token::COMA: outs << "TOKEN(COMA)"; break;
         case Token::FOR : outs << "TOKEN(FOR)"; break;
-        case Token::CD : outs << "TOKEN({)"; break;
-        case Token::CI : outs << "TOKEN(})"; break;
+        case Token::CD : outs << "TOKEN(CD)"; break;
+        case Token::CI : outs << "TOKEN(CI)"; break;
         case Token::LET : outs << "TOKEN(LET)"; break;
         case Token::MUT : outs << "TOKEN(MUT)"; break;
         case Token::FN : outs << "TOKEN(FN)"; break;
         case Token::Arrow : outs << "TOKEN(Arrow)"; break;
-        case Token::DP : outs << "TOKEN(:)";break;
-        case Token::DDP : outs << "TOKEN(..)"; break;
-        case Token::EXPRINT : outs << "TOKEN(\"{}\")\n"; break;
+        case Token::DP : outs << "TOKEN(DP)";break;
+        case Token::DDP : outs << "TOKEN(DDP)"; break;
+        case Token::GE : outs << "TOKEN(GE)";break;
+        case Token::GT : outs << "TOKEN(GT)";break;
+        case Token::PLUSEQ : outs << "TOKEN(PLUSEQ)"; break;
+        case Token::EXPRINT : outs << "TOKEN(EXPRINT)"; break;
         default: outs << "TOKEN(UNKNOWN)"; break;
     }
     return outs;

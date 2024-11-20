@@ -30,13 +30,10 @@ Token* Scanner::nextToken() {
         while (current < input.length() && isalnum(input[current]))
             current++;
         string word = input.substr(first, current - first);
-        cout << "que paso aca crack:" << endl;
         if (word == "println") {
             current++;
             token = new Token(Token::PRINTLN, word, 0, word.length());
-        } else if(word == "\""){
-            cout << "llego aca" << endl;
-        }else if (word == "if") {
+        } else if (word == "if") {
             token = new Token(Token::IF, word, 0, word.length());
         } else if (word == "else") {
             token = new Token(Token::ELSE, word, 0, word.length());
@@ -50,16 +47,30 @@ Token* Scanner::nextToken() {
             token = new Token(Token::FOR, word, 0, word.length());
         } else if (word == "fn") {
             token = new Token(Token::FN, word, 0, word.length());
-        } else if (word == "..") {
-            token = new Token(Token::DDP, word, 0, word.length());
-        }else {
+        } else {
             token = new Token(Token::ID, word, 0, word.length());
         }
     }
 
-    else if (strchr("+-*/()=;,<{}:", c)) {
+    else if (strchr("+-*/()=;,<>{}.:", c) || c == '"') {
+        if(c == '"'){
+            string word =  "\"{}\"";
+            token = new Token(Token::EXPRINT, word, 0 , word.length());
+            current += 4;
+        } else if(c == '.'){
+            string word = "..";
+            token = new Token(Token::DDP, word, 0 ,word.length());
+            current += 2;
+        } else{
         switch(c) {
-            case '+': token = new Token(Token::PLUS, c); break;
+            case '+': 
+                if (current + 1 < input.length() && input[current + 1] == '=') {
+                    token = new Token(Token::PLUSEQ, "+=", 0, 2);
+                    current++;
+                } else {
+                    token = new Token(Token::PLUS, c);
+                }
+                break;
             case '*': token = new Token(Token::MUL, c); break;
             case '/': token = new Token(Token::DIV, c); break;
             case ',': token = new Token(Token::COMA, c); break;
@@ -92,12 +103,21 @@ Token* Scanner::nextToken() {
                     token = new Token(Token::LT, c);
                 }
                 break;
+            case '>':
+                if (current + 1 < input.length() && input[current + 1] == '=') {
+                    token = new Token(Token::GE, ">=", 0, 2);
+                    current++;
+                } else {
+                    token = new Token(Token::GT, c);
+                }
+                break;
             case ';': token = new Token(Token::PC, c); break;
             default:
                 cout << "No debería llegar acá" << endl;
                 token = new Token(Token::ERR, c);
         }
         current++;
+        }
     }
     else {
         token = new Token(Token::ERR, c);

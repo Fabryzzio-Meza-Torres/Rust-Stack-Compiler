@@ -19,6 +19,8 @@ public:
         PRINTLN, // println!
         EXPRINT, // "{}"
         ASSIGN, 
+        GE,
+        GT,
         PC,
         LT,
         LE, 
@@ -36,6 +38,7 @@ public:
         Arrow, // ->
         DP,  // :
         DDP, // ..
+        PLUSEQ // += 
     };
 
     Type type;

@@ -1,7 +1,7 @@
 Program ::= VarDecList FunDecList
 VarDecList ::= (VarDec)*
 FunDecList ::= (FunDec)+
-FunDec ::= 'fn' id '(' [ParamDecList] ')' ['->' Type] '{' Body '}'
+FunDec ::= 'fn' id '(' [ParamDecList] ')' ['->' Type] '{' Body CExp '}'
 Body ::= VarDecList StmtList
 ParamDecList ::= id ':' Type (, id ':' Type)*
 VarDec ::= 'let' 'mut' VarList ':' Type ';'
