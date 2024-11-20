@@ -1,0 +1,16 @@
+program ExampleProgram;
+
+function suma(a, b: Integer): Integer;
+begin
+    suma := a + b;
+end;
+
+var
+    x, y: Integer;
+
+begin
+    x := 1;
+    y := 20;
+
+    writeln(suma(x, y));
+end.

@@ -1,0 +1,19 @@
+Program ::= VarDecList FunDecList
+VarDecList ::= (VarDec)*
+FunDecList ::= (FunDec)+
+FunDec ::= 'fn' id '(' [ParamDecList] ')' ['->' Type] '{' Body '}'
+Body ::= VarDecList StmtList
+ParamDecList ::= id ':' Type (, id ':' Type)*
+VarDec ::= 'let' 'mut' VarList ':' Type ';'
+Type ::= id
+VarList ::= id
+StmtList ::= Stmt (';' Stmt)* ';'
+Stmt ::= id '=' CExp |
+        'println!' '(' '"{}"' CExp ')' |
+        'if' CExp '{' Body  '}' ['else' '{' Body '}'] |
+        'for' CExp 'in' CExp '..' CExp '{' Body '}'
+CExp ::=  Exp [('<' | '<=' | '==' ) Exp]
+Exp ::= Term (('+' | '-' ) Term) *
+Term ::= Factor (( '*' | '/' ) Factor)*
+Factor ::= id | Num | '(' Exp ')' | id '(' [ ArgsList ]')' 
+ArgsList ::= CExp (',' CExp)*

@@ -1,0 +1,14 @@
+var int a,b,c;
+fun int suma(int x)
+    var int y;
+    y = x + 1;
+    return(y)
+endfun
+fun void main()
+    a = 5;
+    b = suma(a);
+    c = suma(b);
+    print (b);
+    return()
+endfun
+

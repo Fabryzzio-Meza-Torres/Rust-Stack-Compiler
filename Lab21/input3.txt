@@ -1,0 +1,15 @@
+fun int factorial(int x)
+  if 1<x then
+     return (x*factorial(x-1))
+  else
+     return (1)
+  endif
+endfun
+
+fun void main()
+  var int a,b;
+  a = 5;
+  b = factorial(a);
+  print(b);
+  return()
+endfun
