@@ -1,0 +1,8 @@
+Scanner + Parser + Visitor:
+1.- g++ -o test exp.cpp parser.cpp imp_codegen.cpp imp_type_checker.cpp scanner.cp
+p token.cpp visitor.cpp main.cpp imp_type.cpp imp_interpreter.cpp imp_value.cpp  -std=c++20
+2.- ./test input1.txt
+
+Svm:
+1.- g++ -o testMachine svm_run.cpp svm.cpp svm_parser.cpp   -std=c++20
+2.- ./testMachine input1.txt.sm

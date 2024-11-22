@@ -131,7 +131,7 @@ void PrintVisitor::visit(AssignStatement* stm) {
 }
 
 void PrintVisitor::visit(PrintStatement* stm) {
-    cout << "println!(\"{}\"), ";
+    cout << "println!(\"{}\", ";
     stm->e->accept(this);
     cout << ");";
 }

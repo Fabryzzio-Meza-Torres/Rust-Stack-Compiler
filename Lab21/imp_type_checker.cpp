@@ -1,7 +1,8 @@
 #include"imp_type_checker.hh"
 
-ImpTypeChecker::ImpTypeChecker():inttype(),booltype(),voidtype() {
-  inttype.set_basic_type("int");
+ImpTypeChecker::ImpTypeChecker():inttype(),booltype(),lltype(),voidtype() {
+  inttype.set_basic_type("i32");
+  lltype.set_basic_type("i64");
   booltype.set_basic_type("bool");
   voidtype.set_basic_type("void");
   list<string> noparams;
@@ -160,7 +161,7 @@ void ImpTypeChecker::visit(AssignStatement* s) {
   }
    sp_decr(1);
   ImpType var_type = env.lookup(s->id);  
-  if (!type.match(var_type)) {
+  if (!(type.match(var_type) || (var_type.ttype == ImpType::LL && type.ttype == ImpType::INT)) ) {
     cout << "Tipo incorrecto en Assign a " << s->id << endl;
   }
   return;
