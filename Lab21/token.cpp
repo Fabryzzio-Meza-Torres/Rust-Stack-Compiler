@@ -47,6 +47,7 @@ std::ostream& operator << ( std::ostream& outs, const Token & tok )
         case Token::GT : outs << "TOKEN(GT)";break;
         case Token::PLUSEQ : outs << "TOKEN(PLUSEQ)"; break;
         case Token::EXPRINT : outs << "TOKEN(EXPRINT)"; break;
+        case Token::IN : outs << "TOKEN(IN)"; break;
         default: outs << "TOKEN(UNKNOWN)"; break;
     }
     return outs;

@@ -26,10 +26,11 @@ FCallStatement::~FCallStatement() {
         args.pop_front();
     }
 }
-AssignStatement::AssignStatement(string id, Exp* e): id(id), rhs(e) {}
+AssignStatement::AssignStatement(string id, Exp* e, bool sum): id(id), rhs(e), sum(sum) {}
 AssignStatement::~AssignStatement() {
     delete rhs;
 }
+
 PrintStatement::PrintStatement(Exp* e): e(e) {}
 PrintStatement::~PrintStatement() {
     delete e;
@@ -46,7 +47,7 @@ WhileStatement::~WhileStatement() {
     delete condition;
     delete b;
 }
-ForStatement::ForStatement(Exp* s, Exp* e, Exp* st, Body* b): start(s), end(e), step(st), b(b) {}
+ForStatement::ForStatement(Exp* s, Exp* e, Exp* st, string name, Body* b): start(s), end(e), step(st), name(name), b(b) {}
 ForStatement::~ForStatement() {
     delete start;
     delete end;
@@ -84,7 +85,7 @@ Body::~Body() {
     delete slist;
 }
 
-FunDec::FunDec(string fname, list<string> types, list<string> vars, string rtype, Body* b): fname(fname), types(types), vars(vars), rtype(rtype), body(b) {}
+FunDec::FunDec(string fname, list<string> types, list<string> vars, string rtype, Body* b, Exp* e): fname(fname), types(types), vars(vars), rtype(rtype), body(b), cexp(e) {}
 FunDec::~FunDec() {
     delete body;
 }
@@ -121,6 +122,9 @@ string Exp::binopToChar(BinaryOp op) {
         case LT_OP: c = "<"; break;
         case LE_OP: c = "<="; break;
         case EQ_OP: c = "=="; break;
+        case PLUSEQ_OP: c = "+="; break;
+        case GE_OP: c = ">=";break;
+        case GT_OP: c = ">"; break;
         default: c = "$";
     }
     return c;

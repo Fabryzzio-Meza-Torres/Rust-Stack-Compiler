@@ -317,6 +317,8 @@ ImpValue ImpInterpreter::visit(BinaryExp* e) {
     ImpValue result;
     ImpValue v1 = e->left->accept(this);
     ImpValue v2 = e->right->accept(this);
+    cout << "binaryexp" << endl;
+    cout << v1 << endl << v2 << endl;
     if (v1.type != TINT || v2.type != TINT) {
         cout << "Error de tipos: operandos en operacion binaria tienen que ser "
                 "enteros"
@@ -329,6 +331,8 @@ ImpValue ImpInterpreter::visit(BinaryExp* e) {
     iv1 = v1.int_value;
     iv2 = v2.int_value;
     switch (e->op) {
+        case PLUSEQ_OP:
+            iv = iv1 + iv2;
         case PLUS_OP:
             iv = iv1 + iv2;
             type = TINT;
@@ -355,6 +359,14 @@ ImpValue ImpInterpreter::visit(BinaryExp* e) {
             break;
         case EQ_OP:
             bv = (iv1 == iv2) ? 1 : 0;
+            type = TBOOL;
+            break;
+        case GE_OP:
+            bv = (iv1 >= iv2) ? 1 : 0;
+            type = TBOOL;
+            break;
+        case GT_OP:
+            bv = (iv1 > iv2)? 1 : 0;
             type = TBOOL;
             break;
     }

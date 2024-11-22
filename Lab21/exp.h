@@ -8,7 +8,7 @@
 #include "visitor.h"
 #include "type_visitor.h"
 using namespace std;
-enum BinaryOp { PLUS_OP, MINUS_OP, MUL_OP, DIV_OP,LT_OP, LE_OP, EQ_OP };
+enum BinaryOp { PLUS_OP, MINUS_OP, MUL_OP, DIV_OP,LT_OP, LE_OP, EQ_OP , GE_OP, GT_OP, PLUSEQ_OP};
 
 class Body;
 class ImpValueVisitor;
@@ -105,13 +105,15 @@ public:
 class AssignStatement : public Stm {
 public:
     std::string id;
+    bool sum;
     Exp* rhs;
-    AssignStatement(std::string id, Exp* e);
+    AssignStatement(std::string id, Exp* e, bool sum);
     int accept(Visitor* visitor);
     void accept(ImpValueVisitor* v);
     void accept(TypeVisitor* v);
     ~AssignStatement();
 };
+
 
 class PrintStatement : public Stm {
 public:
@@ -151,8 +153,9 @@ public:
     Exp* start;
     Exp* end;
     Exp* step;
+    string name;
     Body* b;
-    ForStatement(Exp* start, Exp* end, Exp* step, Body* b);
+    ForStatement(Exp* start, Exp* end, Exp* step, string name, Body* b);
     int accept(Visitor* visitor);
     void accept(ImpValueVisitor* v);
     void accept(TypeVisitor* v);
@@ -210,7 +213,8 @@ public:
   list<string> vars;
   list<string> types;
   Body* body;
-  FunDec(string fname, list<string> types, list<string> vars, string rtype, Body* body);
+  Exp* cexp;
+  FunDec(string fname, list<string> types, list<string> vars, string rtype, Body* body, Exp* cexp);
   int accept(Visitor* v);
   void accept(ImpValueVisitor* v);
   void accept(TypeVisitor* v);

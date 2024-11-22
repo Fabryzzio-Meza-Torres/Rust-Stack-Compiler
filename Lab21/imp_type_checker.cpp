@@ -230,12 +230,15 @@ ImpType ImpTypeChecker::visit(BinaryExp* e) {
   }
   ImpType result;
   switch(e->op) {
+  case PLUSEQ_OP:
   case PLUS_OP:
   case MINUS_OP:
   case MUL_OP:
   case DIV_OP:
     result = inttype;
     break;
+  case GE_OP:
+  case GT_OP:
   case LT_OP: 
   case LE_OP:
   case EQ_OP:
