@@ -14,7 +14,7 @@ push  10
 storer 2
 loadr 1
 loadr 2
-
+gt
 jmpz L0
 loadr 1
 print
@@ -23,3 +23,4 @@ L0: skip
 loadr 2
 print
 L1: skip
+return 3

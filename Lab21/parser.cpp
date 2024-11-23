@@ -81,7 +81,16 @@ VarDec* Parser::parseVarDec() {
         }
         cout << previous->text << endl;
         vd = new VarDec(type, ids);
+        //si con esto no sale no sale con nada zzz
+    } else if(previous != NULL && previous->text == "for"){
+        match(Token::ID);
+        cout << "LLEGA" << endl;
+        list<string> ids;
+        ids.push_back(previous->text);
+        vd = new VarDec("i32", ids);
     }
+    
+    //acaba aqui
     return vd;
 }
 
@@ -334,10 +343,7 @@ Stm* Parser::parseStatement() {
 
     }
     else if(match(Token::FOR)){
-        cout << previous->text << " ";
-        if(!match(Token::ID)){
-            cout << "Error: se esperaba una variable para el for" << endl;
-        }
+        VarDecList* vdl = parseVarDecList();
         cout << previous->text << " ";
         string name = previous->text;
         if(!match(Token::IN)){
@@ -368,7 +374,7 @@ Stm* Parser::parseStatement() {
         }
         cout << previous->text << endl<<endl ;
         Exp* step = NULL;
-        s = new ForStatement(start, end, step, name, tb);
+        s = new ForStatement(start, end, step, vdl, tb);
     } 
     return s;
 }

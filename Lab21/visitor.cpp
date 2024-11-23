@@ -185,7 +185,9 @@ void PrintVisitor::visit(WhileStatement* stm){
 
 void PrintVisitor::visit(ForStatement* stm){
     cout << "for ";
-    cout << stm ->name;
+    for(auto i: stm->vardecs->vardecs){
+        cout << i->vars.back();
+    }
     cout << " in ";
     stm->start->accept(this);
     cout << "..";

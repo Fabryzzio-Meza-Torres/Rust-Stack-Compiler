@@ -33,13 +33,15 @@ void ImpTypeChecker::visit(Program* p) {
   env.add_level();
   ftable.add_level();
   p->vardecs->accept(this);
+
   p->fundecs->accept(this);
+
   if (!has_main) {
     cout << "Programa no tiene main" << endl;
     exit(0);
   }
   env.remove_level();
-
+  
   for(int i = 0; i < fnames.size(); i++) {
     cout << "-- Function: " << fnames[i] << endl;
     FEntry fentry = ftable.lookup(fnames[i]);
@@ -75,12 +77,15 @@ void ImpTypeChecker::visit(FunDecList* s) {
   for (it = s->flist.begin(); it != s->flist.end(); ++it) {
     add_fundec(*it);
   }
+
   for (it = s->flist.begin(); it != s->flist.end(); ++it) {
     // added
     sp = max_sp = 0;
     dir = max_dir = 0;
     // end-added
+
     (*it)->accept(this);
+
     FEntry fentry;
     string fname  = (*it)->fname;
     fentry.fname = fname;
@@ -117,6 +122,7 @@ void ImpTypeChecker::add_fundec(FunDec* fd) {
     cout << "Tipo invalido en declaracion de funcion: " << fd->fname << endl;
     exit(0);
   }
+
   if (fd->fname.compare("main") == 0) {
     if (!funtype.match(maintype)) {
       cout << "Tipo incorrecto de main: " << funtype << endl;
@@ -140,7 +146,11 @@ void ImpTypeChecker::visit(FunDec* fd) {
     env.add_var(*it,ptype);
   } 
   env.add_var("return", rtype);
-  fd->body->accept(this);
+  if(rtype.ttype == ImpType::VOID){
+    fd->body->accept(this);
+  }else{
+    fd->cexp->accept(this);
+  }
   env.remove_level();
   return;
 }
@@ -212,7 +222,10 @@ void ImpTypeChecker::visit(ReturnStatement* s) {
 }
 
 void ImpTypeChecker::visit(ForStatement* s) {
-  if(!s->start->accept(this).match(inttype) || !s->end->accept(this).match(inttype) || !s->step->accept(this).match(inttype)) {
+  // extra (declara la variable i del testcase)
+  s->vardecs->accept(this);
+  // acaba extra
+  if(!s->start->accept(this).match(inttype) || !s->end->accept(this).match(inttype)) {
     cout << "Expresiones en for deben de ser int" << endl;
     exit(0);
   }

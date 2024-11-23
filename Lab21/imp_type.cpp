@@ -1,6 +1,6 @@
 #include "imp_type.hh"
 
-const char* ImpType::type_names[6] = { "notype", "void", "i32", "bool", "fun", "i64" };
+const char* ImpType::type_names[6] = { "notype", "void", "i32", "bool", "fn", "i64" };
 
 bool ImpType::match(const ImpType& t) {
   if (this->ttype != t.ttype) return false;

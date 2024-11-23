@@ -153,9 +153,9 @@ public:
     Exp* start;
     Exp* end;
     Exp* step;
-    string name;
+    VarDecList* vardecs;
     Body* b;
-    ForStatement(Exp* start, Exp* end, Exp* step, string name, Body* b);
+    ForStatement(Exp* start, Exp* end, Exp* step, VarDecList* v, Body* b);
     int accept(Visitor* visitor);
     void accept(ImpValueVisitor* v);
     void accept(TypeVisitor* v);

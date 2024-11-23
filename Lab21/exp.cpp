@@ -47,12 +47,13 @@ WhileStatement::~WhileStatement() {
     delete condition;
     delete b;
 }
-ForStatement::ForStatement(Exp* s, Exp* e, Exp* st, string name, Body* b): start(s), end(e), step(st), name(name), b(b) {}
+ForStatement::ForStatement(Exp* s, Exp* e, Exp* st, VarDecList* v, Body* b): start(s), end(e), step(st), vardecs(v),  b(b) {}
 ForStatement::~ForStatement() {
     delete start;
     delete end;
     delete step;
     delete b;
+    delete vardecs;
 }
 
 

@@ -7,19 +7,27 @@ call
 halt
 Lmain: skip
 enter 4
-alloc 3
+alloc 2
 push  1
 storer 1
-push  10
+alloc 1
+push  0
 storer 2
-push  1000000
-storer 3
-push  20
-storer 1
-loadr 1
-print
+L0: skip
 loadr 2
-print
-loadr 3
+push  10
+sub
+jmpz L1
+loadr 2
+loadr 1
+add
+storer 1
+loadr 2
+push 1
+add
+storer 2
+goto L0
+L1: skip
+loadr 1
 print
 return 3
