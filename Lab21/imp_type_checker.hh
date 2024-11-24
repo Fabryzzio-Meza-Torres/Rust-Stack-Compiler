@@ -27,6 +27,7 @@ private:
   bool has_main;
   ImpType booltype;
   ImpType inttype;
+  ImpType lltype;
   ImpType voidtype;
   ImpType maintype;
 

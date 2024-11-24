@@ -47,7 +47,9 @@ Token* Scanner::nextToken() {
             token = new Token(Token::FOR, word, 0, word.length());
         } else if (word == "fn") {
             token = new Token(Token::FN, word, 0, word.length());
-        } else {
+        } else if(word == "in") {
+            token = new Token(Token::IN, word, 0, word.length());
+        }else {
             token = new Token(Token::ID, word, 0, word.length());
         }
     }

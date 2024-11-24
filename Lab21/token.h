@@ -38,7 +38,8 @@ public:
         Arrow, // ->
         DP,  // :
         DDP, // ..
-        PLUSEQ // += 
+        PLUSEQ, // += 
+        IN
     };
 
     Type type;

@@ -313,6 +313,6 @@ Instruction* Parser::parseInstruction() {
     instr = new Instruction(etiqueta, Token::tokenToIType(tipoToken), n);
   } else { 
     instr = new Instruction(etiqueta, Token::tokenToIType(tipoToken), etiquetaSalto);
-  }
+  } 
   return instr;
 }

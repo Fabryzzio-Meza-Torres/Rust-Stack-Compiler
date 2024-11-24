@@ -71,7 +71,6 @@ void ImpCodeGen::visit(Program* p) {
 void ImpCodeGen::visit(Body * b) {
   int dir = current_dir;
   direcciones.add_level();
-  
   b->vardecs->accept(this);
   b->slist->accept(this);
   
@@ -110,6 +109,7 @@ void ImpCodeGen::visit(FunDecList* s) {
 }
 
 void ImpCodeGen::visit(FunDec* fd) {
+
   FEntry fentry = analysis->ftable.lookup(fd->fname);
   current_dir = 0;
   list<string>::iterator it, vit;
@@ -117,26 +117,38 @@ void ImpCodeGen::visit(FunDec* fd) {
   int i = 1;
   int m = fd->types.size();
   VarEntry ventry;
+
   for (it = fd->types.begin(), vit = fd->vars.begin();
        it != fd->types.end(); ++it, ++vit){
     ventry.is_global = false;
     ventry.dir = i-(m+3);
     direcciones.add_var(*vit,ventry);
     i++;
-    // cout << *it << " " << *vit;
+    // cout << *it << " " << *vit << endl;
   }
   ImpType ftype = fentry.ftype;
   if (ftype.types[ftype.types.size()-1] != ImpType::VOID) {
     ventry.dir = -(m+3);
     direcciones.add_var("return", ventry);
+
   }
 
   codegen(get_flabel(fd->fname),"skip");
+
   codegen(nolabel,"enter",fentry.mem_locals+fentry.max_stack);
   codegen(nolabel,"alloc",fentry.mem_locals);
 
   num_params = m;
-  fd->body->accept(this);
+  ventry = direcciones.lookup("return");
+  if (ftype.types[ftype.types.size()-1] != ImpType::VOID) {
+    fd->cexp->accept(this);
+    codegen(nolabel,"storer",ventry.dir);
+    codegen(nolabel,"return",num_params+3);
+  }else {
+      fd->body->accept(this);
+      codegen(nolabel,"return",num_params+3);
+  }
+
 
   return ;
 }
@@ -153,6 +165,10 @@ void ImpCodeGen::visit(StatementList* s) {
 void ImpCodeGen::visit(AssignStatement* s) {
   s->rhs->accept(this);
   VarEntry ventry = direcciones.lookup(s->id);
+  if(s->sum){
+    codegen(nolabel,"loadr", ventry.dir);
+    codegen(nolabel,"add");
+  }
   if (ventry.is_global)
     codegen(nolabel,"store", ventry.dir);
   else
@@ -216,7 +232,8 @@ void ImpCodeGen::visit(ForStatement* s) {
 
     //alloc 1
     codegen(nolabel, "alloc", 1);
-    current_dir++;
+    // declaras el i (sube el current_dir++ automaticamente)
+    s->vardecs->accept(this);
 
     // Inicializar el contador
     s->start->accept(this); 
@@ -235,7 +252,7 @@ void ImpCodeGen::visit(ForStatement* s) {
 
     // Incrementar el contador
     codegen(nolabel, "loadr", current_dir);
-    s->step->accept(this); 
+    codegen(nolabel, "push", 1);
     codegen(nolabel, "add");
     codegen(nolabel, "storer", current_dir);
 
@@ -257,6 +274,10 @@ int ImpCodeGen::visit(BinaryExp* e) {
   case LT_OP:  op = "lt"; break;
   case LE_OP: op = "le"; break;
   case EQ_OP:  op = "eq"; break;
+  // extra
+  case GE_OP: op = "ge"; break;
+  case GT_OP: op = "gt"; break;
+
   default: cout << "binop " << Exp::binopToChar(e->op) << " not implemented" << endl;
   }
   codegen(nolabel, op);

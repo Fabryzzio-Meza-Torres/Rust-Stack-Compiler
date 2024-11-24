@@ -44,7 +44,6 @@ int main(int argc, const char* argv[]) {
         cout << "Parsing exitoso" << endl << endl;
         cout << "Iniciando Visitor:" << endl;
         PrintVisitor printVisitor;
-        ImpInterpreter interpreter;
         ImpTypeChecker typeChecker;
         ImpCodeGen codegen(&typeChecker);
 
@@ -54,9 +53,6 @@ int main(int argc, const char* argv[]) {
         cout  << endl;
         cout << "TypeChecker:" << endl;
         typeChecker.typecheck(program);
-
-        cout << endl << "Run program:" << endl;
-        interpreter.interpret(program);
 
         cout << endl << "Generar codigo:" << endl;
         string filename =  argv[1];

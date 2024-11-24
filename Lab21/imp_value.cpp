@@ -4,7 +4,8 @@ ImpValue::ImpValue():type(NOTYPE) { }
 
 ImpVType ImpValue::get_basic_type(string s) {
   ImpVType tt;
-  if (s.compare("int")==0) tt = TINT;
+  if (s.compare("i32")==0) tt = TINT;
+  else if(s.compare("i64") == 0) tt = TLL;
   else if (s.compare("bool")==0) tt = TBOOL;
   else tt = NOTYPE; 
   return tt;
