@@ -1,0 +1,8 @@
+fn main() {
+let mut counter:i32;
+counter=0;
+while counter<6{
+    println!("{}",counter);
+    counter=counter+1;
+}
+}

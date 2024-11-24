@@ -12,7 +12,8 @@ Stmt ::= id '=' CExp ;|
          id '+=' CExp ;|
          'println!' '(' '"{}"' CExp ')' ; |
          'if' CExp '{' Body  '}' ['else' '{' Body '}'] |
-         'for' id 'in' CExp '..' CExp '{' Body '}' 
+         'for' id 'in' CExp '..' CExp '{' Body '}'
+         'while' CExp '{' Body '} 
 CExp ::=  Exp [('<' | '<=' | '==' | '>=' | '>') Exp]
 Exp ::= Term (('+' | '-' ) Term) *
 Term ::= Factor (( '*' | '/' ) Factor)*

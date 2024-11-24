@@ -177,10 +177,10 @@ int PrintVisitor::visit(IFExp* pepito) {
 void PrintVisitor::visit(WhileStatement* stm){
     cout << "while ";
     stm->condition->accept(this);
-    cout << " do" << endl;
+    cout <<" {" << endl;
     stm->b->accept(this);
     printIndent();
-    cout << "endwhile";
+    cout <<" }";
 }
 
 void PrintVisitor::visit(ForStatement* stm){

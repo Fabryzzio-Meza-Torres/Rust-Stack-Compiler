@@ -336,8 +336,17 @@ Stm* Parser::parseStatement() {
     }
     else if (match(Token::WHILE)) {
         e = parseCExp();
-
+        if (!match(Token::CI)) {
+            cout << "Error: se esperaba un '{' después de la expresión." << endl;
+            exit(1);
+        }
+        cout << previous->text << endl<<endl;
         tb = parseBody();
+
+        if(!match(Token::CD)){
+            cout << "Error: se esperaba '}' después de la expresión." << endl;
+            exit(1);
+        }
 
         s = new WhileStatement(e, tb);
 

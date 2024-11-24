@@ -1,8 +1,8 @@
-
+//Profe no me jale
 fn main() {
     let mut x: i32;
     let mut y: i32;
-
+    //Napa salvame
     x = 5;
     y = 10;
 

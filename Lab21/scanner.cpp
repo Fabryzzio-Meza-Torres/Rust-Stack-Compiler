@@ -18,6 +18,18 @@ Token* Scanner::nextToken() {
     if (current >= input.length()) return new Token(Token::END);
     char c  = input[current];
     first = current;
+
+
+
+    if (c == '/' && current + 1 < input.length() && input[current + 1] == '/') {
+        current += 2;
+        while (current < input.length() && input[current] != '\n') {
+            current++;
+        }
+        return nextToken();
+    }
+
+
     if (isdigit(c)) {
         current++;
         while (current < input.length() && isdigit(input[current]))
